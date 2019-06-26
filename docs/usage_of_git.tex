@@ -1,5 +1,5 @@
-\documentclass{jsarticle}
-\usepackage[top=1cm,bottom=1.5cm,left=2.0cm,right=2.0cm]{geometry}
+\documentclass[dvipdfmx]{jsarticle}
+\usepackage[top=1cm,bottom=1.5cm,left=1.0cm,right=1.0cm]{geometry}
 \usepackage{listings,jlisting}
 \usepackage{mips}
 \usepackage{amssymb} % needed for math
@@ -8,7 +8,14 @@
 \usepackage[ngerman]{babel} % this is needed for german umlauts
 \usepackage[T1]{fontenc}    % this is needed for correct output of umlauts in pdf
 % the following is needed for syntax highlighting
-\usepackage{color}
+\usepackage[dvipdfmx]{color}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{url}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.callouts}
+
+
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -49,6 +56,164 @@
 
   % タイトル出力
   \maketitle
+  \section{はじめに}
+    今回の開発では「Shared Repository Model」に基づいた開発をするための手順書である。\\
+    「Shared Repository Model」を以下では「SRM」と略して書く。\\
+
+
+  \section{SRMとは}
+    SRMとは複数の開発者(少人数であることが多い)が１つのRepositoryのpush機能を保持し、Forkをせずに開発するモデルである。
+    詳しくは、以下のサイトを参照 \\
+    \url{https://help.github.com/en/articles/about-collaborative-development-models}
+
+  \section{SRMによる開発の流れ}
+    \begin{enumerate}
+      \item 開発するRepositoryを自分のマシンのローカルにcloneする。
+      \item master branchから開発用branchを作成
+      \item 開発用branchで開発作業を行う
+      \item 開発中のcommitは開発用のbranchにcommitする。
+      \item 開発が終了したら、remote repositoryの開発用branchにpushしpull requestをする。
+      \item コードレビューをして問題がなかったら、masterにmergeする。
+    \end{enumerate}
+
+    \subsection{具体例}
+      $\\ \\$
+      \begin{tikzpicture}[every node/.style={circle,fill=cyan,white}]
+          \node (m0) {master};
+          \node[right=of m0] (m1) {};
+          \node[right=6.5cm of m1] (m2) {merge};
+          \node[right=of m2] (m3) {};
+          \node[below right=of m1] (d0) {develop};
+          \node[right=of d0] (d1) {};
+          \node[right=of d1] (d2) {};
+          \node[right=of d2] (d3) {};
+
+          \foreach \u / \v in {m0/m1,m1/m2,m2/m3,m1/d0,d0/d1,d1/d2,d2/d3,d3/m2}
+            \draw[-] (\u) -- (\v);
+      \end{tikzpicture}
+      $\\ \\$
+    以上のような開発フローを考える
+    \begin{enumerate}
+      \item 開発するRepositoryを自分のマシンのローカルにcloneする。
+      \item masterブランチから開発ブランチを作成\\
+        \begin{tikzpicture}[every node/.style={circle,fill=cyan,white}]
+            \node (m0) {master};
+            \node[right=of m0] (m1) {};
+            \node[right=of m2] (m3) {};
+            \node[below right=of m1] (d0) {develop};
+
+            \node[rectangle callout, fill=dkgreen, white, callout absolute pointer={(m1)}, above=of m1]{masterブランチから開発用ブランチを作成した};
+            \foreach \u / \v in {m0/m1,m1/m3,m1/d0}
+              \draw[-] (\u) -- (\v);
+        \end{tikzpicture}
+        $\\ \\$
+    \item developブランチで開発\\ \\
+      \begin{tikzpicture}[every node/.style={circle,fill=cyan,white}]
+          \node (m0) {master};
+          \node[right=of m0] (m1) {};
+          \node[right=of m2] (m3) {};
+          \node[below right=of m1] (d0) {develop};
+          \node[right=of d0] (d1) {};
+          \node[right=of d1] (d2) {};
+
+          \node[rectangle callout, fill=dkgreen, white, callout absolute pointer={(d0.north)}, above=of m1, align=center]{developブランチでの開発,\\commitはdevelopブランチにする};
+          \node[rectangle callout, fill=dkgreen, white, callout absolute pointer={(d1.north)}, above=of m1, align=center]{developブランチでの開発,\\commitはdevelopブランチにする};
+          \node[rectangle callout, fill=dkgreen, white, callout absolute pointer={(d2.north)}, above=of m1, align=center]{developブランチでの開発,\\commitはdevelopブランチにする};
+          \foreach \u / \v in {m0/m1,m1/m3,m1/d0,d0/d1,d1/d2}
+            \draw[-] (\u) -- (\v);
+      \end{tikzpicture}
+      $\\ \\$
+
+      \item 開発中のcommitは開発用のbranchにcommitする。\\ \\
+      \begin{tikzpicture}[every node/.style={circle,fill=cyan,white}]
+          \node (m0) {master};
+          \node[right=of m0] (m1) {};
+          \node[right=of m2] (m3) {};
+          \node[below right=of m1] (d0) {develop};
+          \node[right=of d0] (d1) {commit};
+          \node[right=of d1] (d2) {commit};
+
+          \node[rectangle callout, fill=dkgreen, white, callout absolute pointer={(d1.south)}, below=of d1]{commitはdevelopブランチにする};
+          \node[rectangle callout, fill=dkgreen, white, callout absolute pointer={(d2.south)}, below=of d1]{commitはdevelopブランチにする};
+          \foreach \u / \v in {m0/m1,m1/m3,m1/d0,d0/d1,d1/d2}
+            \draw[-] (\u) -- (\v);
+      \end{tikzpicture}
+      $\\ \\$
+
+      \item 開発が終了したら、remote repositoryのdevelop branchにpushする。\\ \\
+        \begin{tikzpicture}[every node/.style={circle,fill=cyan,white}]
+            \node (m0) {master};
+            \node[right=of m0] (m1) {};
+            \node[right=of m2] (m3) {};
+            \node[below right=of m1] (d0) {develop};
+            \node[right=of d0] (d1) {};
+            \node[right=of d1] (d2) {};
+            \node[right=of d2, align=center] (d3) {push to\\ develop \\branch};
+
+            \node[rectangle callout, fill=dkgreen!80, white, callout absolute pointer={(d3.north)}, above=of d3]{developブランチでの開発が終了したので、developブランチにpush};
+            \foreach \u / \v in {m0/m1,m1/m3,m1/d0,d0/d1,d1/d2,d2/d3}
+              \draw[-] (\u) -- (\v);
+        \end{tikzpicture}
+      $\\ \\$
+
+      \item github上でpull requestを申請\\ \\
+        \begin{tikzpicture}[every node/.style={circle,fill=cyan,white}]
+            \node (m0) {master};
+            \node[right=of m0] (m1) {};
+            \node[right=of m2] (m3) {};
+            \node[below right=of m1] (d0) {develop};
+            \node[right=of d0] (d1) {};
+            \node[right=of d1] (d2) {};
+            \node[right=of d2, align=center] (d3) {};
+
+            \node[rectangle callout, fill=dkgreen, white, callout absolute pointer={(d3.south)}, below=of d3]{github上でpull requestを申請};
+            \foreach \u / \v in {m0/m1,m1/m3,m1/d0,d0/d1,d1/d2,d2/d3}
+              \draw[-] (\u) -- (\v);
+        \end{tikzpicture}
+      $\\ \\$
+
+      \item コードレビューをして、コードに問題がなければmaster ブランチにmerge \\ \\
+      \begin{tikzpicture}[every node/.style={circle,fill=cyan,white}]
+          \node (m0) {master};
+          \node[right=of m0] (m1) {};
+          \node[right=6.5cm of m1, align=center] (m2) {merge to \\master branch};
+          \node[right=of m2] (m3) {};
+          \node[below right=of m1] (d0) {develop};
+          \node[right=of d0] (d1) {};
+          \node[right=of d1] (d2) {};
+          \node[right=of d2] (d3) {};
+
+          \node[rectangle callout, fill=dkgreen, white, callout absolute pointer={(m2.north)}, above=of m2]{master ブランチにmergeされた};
+          \foreach \u / \v in {m0/m1,m1/m2,m2/m3,m1/d0,d0/d1,d1/d2,d2/d3,d3/m2}
+            \draw[-] (\u) -- (\v);
+      \end{tikzpicture}
+      $\\ \\$
+  \end{enumerate}
+
+  \section{各作業のやり方}
+    以下の説明はatomを前提として説明する。\\
+    説明のためにREADME.mdのみしかないrepository testを用いて説明する。
+
+  \subsection{remote repositoryをローカルにクローン}
+    省略
+
+  \subsection{branchの作成,branchの切り替え,現在いるbranchの確認}
+    repository testをcloneしてきた直後はした画像のようになっている。
+    \begin{figure}[h]
+      \begin{center}
+        \includegraphics[width=100mm, height=50mm]{../screenshot/github0.png}
+        \caption{}
+      \end{center}
+    \end{figure}
+    $\\ \\$
+    branchは以下のようにターミナルでコマンドを打つことで作成できる。\\
+    また、atom上でもGUIを用いて作成することができる。
+
+
+
+  \subsection{開発用ブランチにcommit}
+
+
 
 
 \end{document}
