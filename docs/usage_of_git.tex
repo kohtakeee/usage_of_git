@@ -1,5 +1,5 @@
 \documentclass[dvipdfmx]{jsarticle}
-\usepackage[top=1cm,bottom=1.5cm,left=1.0cm,right=1.0cm]{geometry}
+\usepackage[top=1cm,bottom=1.0cm,left=1.0cm,right=1.0cm]{geometry}
 \usepackage{listings,jlisting}
 \usepackage{mips}
 \usepackage{amssymb} % needed for math
@@ -12,6 +12,8 @@
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage{nonfloat}
+
 \usetikzlibrary{positioning}
 \usetikzlibrary{shapes.callouts}
 
@@ -206,14 +208,83 @@
       \end{center}
     \end{figure}
     $\\ \\$
+
     branchは以下のようにターミナルでコマンドを打つことで作成できる。\\
-    また、atom上でもGUIを用いて作成することができる。
+    また、atom上でもGUIを用いて作成することができる。\\
 
 
+    \begin{itemize}
+      \item branchの確認\\
+        $現在作業中のbranchの確認や存在するbranchの確認は以下のコマンドで\\
+        \$ git branch\\
+        以下のようにターミナルにコマンドを打つと出力される。\\
+        ただし、*がついてるbranchが現在いるbranchである。$
+
+        \begin{figure}[h]
+          \begin{center}
+            \includegraphics[width=100mm, height=10mm]{../screenshot/branch0.png}
+            \caption{}
+          \end{center}
+        \end{figure}
+        $\\$
+
+        $また、以下のようにatom上の右下にあるmasterのボタンでも簡単に確認できる。\\$
+        \begin{figure}[h]
+          \begin{center}
+            \includegraphics[width=100mm, height=30mm]{../screenshot/branchatom.png}
+            \caption{}
+          \end{center}
+        \end{figure}
+
+      \item branchの作成\\
+
+        $新たにbranchを作る時は以下のようにターミナルでコマンドを打てば作成される。\\
+        \$git branch test_branch\\
+        以下のようにターミナルにコマンドを打つと出力される。\\$
+
+        \begin{figure}[h]
+          \begin{center}
+            \includegraphics[width=100mm, height=20mm]{../screenshot/makebranch.png}
+            \caption{}
+          \end{center}
+        \end{figure}
+        $\\$
+
+        $また、以下のようにatom上の右下にあるmasterのボタンでも簡単に確認できる。\\$
+        \begin{figure}[h]
+          \begin{center}
+            \includegraphics[width=90mm, height=20mm]{../screenshot/makebranchatom.png}
+            \caption{}
+          \end{center}
+        \end{figure}
+
+      \item branchの切り替え\\
+        $新たにbranchを作る時は以下のようにターミナルでコマンドを打てば作成される。\\
+        \$git branch test_branch\\
+        以下のようにターミナルにコマンドを打つと出力される。\\$
+
+        \begin{figure}[h]
+          \begin{center}
+            \includegraphics[width=100mm, height=10mm]{../screenshot/gitcheckout.png}
+            \caption{}
+          \end{center}
+        \end{figure}
+        $\\$
+
+        $また、以下のようにatom上の右下にあるmasterのボタンでも簡単に確認できる。\\$
+        \begin{figure}[h]
+          \begin{center}
+            \includegraphics[width=90mm, height=20mm]{../screenshot/gitcheckout.png}
+            \caption{}
+          \end{center}
+        \end{figure}
+    \end{itemize}
+    $\\ \\$
 
   \subsection{開発用ブランチにcommit}
-
-
+    \begin{itemize}
+      \item
+    \end{itemize}
 
 
 \end{document}
