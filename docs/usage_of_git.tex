@@ -216,7 +216,7 @@
     \begin{itemize}
       \item branchの確認\\
         $現在作業中のbranchの確認や存在するbranchの確認は以下のコマンドで\\
-        \$ git branch\\
+        \$ \ git \ branch\\
         以下のようにターミナルにコマンドを打つと出力される。\\
         ただし、*がついてるbranchが現在いるbranchである。$
 
@@ -239,7 +239,7 @@
       \item branchの作成\\
 
         $新たにbranchを作る時は以下のようにターミナルでコマンドを打てば作成される。\\
-        \$git branch test_branch\\
+        \$ \ git \ branch \ test\_ branch\\
         以下のようにターミナルにコマンドを打つと出力される。\\$
 
         \begin{figure}[h]
@@ -260,8 +260,8 @@
 
       \item branchの切り替え\\
         $新たにbranchを作る時は以下のようにターミナルでコマンドを打てば作成される。\\
-        \$git branch test_branch\\
-        以下のようにターミナルにコマンドを打つと出力される。\\$
+        \$ \ git \ checkout \ test\_branch\\
+        以下のようにターミナルにコマンドを打つと出力される。$\\
 
         \begin{figure}[h]
           \begin{center}
@@ -269,12 +269,12 @@
             \caption{}
           \end{center}
         \end{figure}
-        $\\$
 
-        $また、以下のようにatom上の右下にあるmasterのボタンでも簡単に確認できる。\\$
+
+        $また、以下のようにatom上の右下にあるmasterのボタンでも簡単に切り替えられる。$\\
         \begin{figure}[h]
           \begin{center}
-            \includegraphics[width=90mm, height=20mm]{../screenshot/gitcheckout.png}
+            \includegraphics[width=120mm, height=20mm]{../screenshot/gitcheckoutatom.png}
             \caption{}
           \end{center}
         \end{figure}
@@ -282,9 +282,58 @@
     $\\ \\$
 
   \subsection{開発用ブランチにcommit}
-    \begin{itemize}
-      \item
-    \end{itemize}
+    $test\_branchでのcommitはいつも通りに、以下のようにすればいい$
 
+    \begin{itemize}
+      \item git \ add \ \{追加するファイル名\}
+      \item git \ commit \ -m \ \{コミットメッセージ\}
+    \end{itemize}
+    $また、atom上でも以下の画像のようにcommitを行える。$\\
+    $右下のGitボタンを押すと下のように画面が出てくるので、GUIでのaddとcommitが行える。$
+
+    \begin{figure}[ht]
+      \begin{center}
+        \includegraphics[width=120mm, height=180mm]{../screenshot/addcommitatom.png}
+        \caption{}
+      \end{center}
+    \end{figure}
+    $\\ \\$
+  \newpage
+  \subsection{リモートリポジトリにpushする}
+    $test\_branchへのpushは以下のようにterminal上でコマンドを打てばいい。$\\
+    $ \$ \ git \ push \ origin \ test\_branch$
+    \begin{figure}[ht]
+      \begin{center}
+        \includegraphics[width=120mm, height=30mm]{../screenshot/push.png}
+        \caption{}
+      \end{center}
+    \end{figure}
+    $\\$
+    \newpage
+    $また、図８の右下にあるpublishボタンを押すことでもpushできる。$
+
+  \subsection{pull requestの送り方}
+    github上で以下のような画面になるので、compare \& pull requestを押す。
+    \begin{figure}[ht]
+      \begin{center}
+        \includegraphics[width=180mm, height=70mm]{../screenshot/pullrequest.png}
+        \caption{}
+      \end{center}
+    \end{figure}
+
+    すると以下のような画面になるので、適当なタイトルとコメントを書いて Create pull requestを押す。
+    \begin{figure}[ht]
+      \begin{center}
+        \includegraphics[width=180mm, height=70mm]{../screenshot/pullrequestcoment.png}
+        \caption{}
+      \end{center}
+    \end{figure}
+    最後に、問題がなければ以下のような画面になるのでレビュアーのレビューを待ち、訂正を要求されたら訂正する。
+    \begin{figure}[ht]
+      \begin{center}
+        \includegraphics[width=180mm, height=70mm]{../screenshot/merge.png}
+        \caption{}
+      \end{center}
+    \end{figure}
 
 \end{document}
